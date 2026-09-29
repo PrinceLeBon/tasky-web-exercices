@@ -1,0 +1,30 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["react", "typescript", "oxc", "jsx-a11y"],
+  "rules": {
+    "react/rules-of-hooks": "error",
+    "react/exhaustive-deps": "warn",
+    "react/only-export-components": ["warn", { "allowConstantExport": true }],
+    "typescript/no-explicit-any": "error",
+    "eqeqeq": "error",
+    "jsx-a11y/prefer-tag-over-role": "off"
+  },
+  "overrides": [
+    {
+      "files": ["src/shared/**"],
+      "rules": {
+        "no-restricted-imports": ["error", { "patterns": [
+          { "group": ["@/features/**", "@/app/**"], "message": "shared ne dépend d'aucune fonctionnalité." }
+        ] }]
+      }
+    },
+    {
+      "files": ["src/features/**"],
+      "rules": {
+        "no-restricted-imports": ["error", { "patterns": [
+          { "group": ["@/app/**", "@/features/*/**"], "message": "Passez par l'API publique de la fonctionnalité (index.ts)." }
+        ] }]
+      }
+    }
+  ]
+}
