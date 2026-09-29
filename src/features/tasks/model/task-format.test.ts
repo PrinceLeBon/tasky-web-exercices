@@ -19,4 +19,10 @@ describe('formatage des tâches', () => {
     expect(describeTask(base)).toBe('Priorité : haute');
     expect(describeTask({ ...base, dueDate: '2026-10-02' })).toBe('Priorité : haute · Échéance : 2 octobre 2026');
   });
+
+  it('describeTask affiche la catégorie entre la priorité et l’échéance', () => {
+    expect(describeTask({ ...base, category: 'work', dueDate: '2026-10-02' })).toBe(
+      'Priorité : haute · Catégorie : Travail · Échéance : 2 octobre 2026',
+    );
+  });
 });

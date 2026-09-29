@@ -1,4 +1,4 @@
-import { PRIORITY_LABELS, type Task } from './task';
+import { CATEGORY_LABELS, PRIORITY_LABELS, type Task } from './task';
 
 const DATE_FORMAT = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
 
@@ -14,9 +14,12 @@ export function formatCounter(remaining: number): string {
   return `${remaining} tâches restantes`;
 }
 
-/** La ligne d'informations sous le titre d'une tâche. */
+/** La ligne d'informations sous le titre d'une tâche : priorité, catégorie, puis échéance. */
 export function describeTask(task: Task): string {
   const parts = [`Priorité : ${PRIORITY_LABELS[task.priority].toLowerCase()}`];
+  if (task.category) {
+    parts.push(`Catégorie : ${CATEGORY_LABELS[task.category]}`);
+  }
   if (task.dueDate) {
     parts.push(`Échéance : ${formatDueDate(task.dueDate)}`);
   }
