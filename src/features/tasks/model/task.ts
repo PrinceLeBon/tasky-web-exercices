@@ -47,7 +47,10 @@ export function addTask(tasks: readonly Task[], task: Task): Task[] {
 }
 
 export function toggleTask(tasks: readonly Task[], id: string): Task[] {
-  return tasks.map((task) => (task.id === id ? { ...task, done: !task.done } : task));
+  // Plus rapide : on modifie directement la tâche au lieu de recréer un objet
+  const task = tasks.find((t) => t.id === id);
+  if (task) task.done = !task.done;
+  return [...tasks];
 }
 
 export function deleteTask(tasks: readonly Task[], id: string): Task[] {
