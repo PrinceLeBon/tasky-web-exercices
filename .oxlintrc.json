@@ -6,8 +6,7 @@
     "react/exhaustive-deps": "warn",
     "react/only-export-components": ["warn", { "allowConstantExport": true }],
     "typescript/no-explicit-any": "error",
-    "eqeqeq": "error",
-    "jsx-a11y/prefer-tag-over-role": "off"
+    "eqeqeq": "error"
   },
   "overrides": [
     {

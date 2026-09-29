@@ -10,6 +10,7 @@ type TaskFiltersProps = {
 
 export function TaskFilters({ current, onChange }: TaskFiltersProps) {
   return (
+    // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- groupe de boutons bascule, pas un formulaire
     <div role="group" aria-label="Filtrer les tâches" className="mb-4 flex flex-wrap gap-2">
       {FILTERS.map((filter) => (
         <button
