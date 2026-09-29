@@ -1,5 +1,4 @@
-import { TasksPage } from '@/features/tasks';
-import { UrgentPanel } from '@/features/urgent/UrgentPanel';
+import { TasksPage, UrgentPanel } from '@/features/tasks';
 import { Header } from './Header';
 
 export function App() {

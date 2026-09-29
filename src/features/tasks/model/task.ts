@@ -47,10 +47,7 @@ export function addTask(tasks: readonly Task[], task: Task): Task[] {
 }
 
 export function toggleTask(tasks: readonly Task[], id: string): Task[] {
-  // Plus rapide : on modifie directement la tâche au lieu de recréer un objet
-  const task = tasks.find((t) => t.id === id);
-  if (task) task.done = !task.done;
-  return [...tasks];
+  return tasks.map((task) => (task.id === id ? { ...task, done: !task.done } : task));
 }
 
 export function deleteTask(tasks: readonly Task[], id: string): Task[] {
@@ -65,4 +62,16 @@ export function filterTasks(tasks: readonly Task[], filter: Filter): Task[] {
 
 export function countRemaining(tasks: readonly Task[]): number {
   return tasks.filter((task) => !task.done).length;
+}
+
+/** Les tâches urgentes : priorité haute, non terminées, la plus proche échéance d'abord (sans échéance : à la fin). */
+export function selectUrgentTasks(tasks: readonly Task[]): Task[] {
+  return tasks
+    .filter((task) => task.priority === 'high' && !task.done)
+    .sort((a, b) => (a.dueDate ?? '9999-12-31').localeCompare(b.dueDate ?? '9999-12-31'));
+}
+
+/** Une tâche est en retard si son échéance (un jour local) est passée et qu'elle n'est pas terminée. */
+export function isLate(task: Task, today: string): boolean {
+  return !task.done && task.dueDate !== undefined && task.dueDate < today;
 }
