@@ -1,4 +1,5 @@
 import type { Ref } from 'react';
+import { useToday } from '@/shared/lib/dates';
 import { Button } from '@/shared/ui/Button';
 import type { Priority, Task } from '../model/task';
 import { describeTask } from '../model/task-format';
@@ -18,6 +19,7 @@ type TaskItemProps = {
 
 export function TaskItem({ task, onToggle, onDelete, checkboxRef }: TaskItemProps) {
   const checkboxId = `task-${task.id}`;
+  const today = useToday();
 
   return (
     <article
@@ -40,7 +42,7 @@ export function TaskItem({ task, onToggle, onDelete, checkboxRef }: TaskItemProp
       <Button variant="ghost" size="sm" aria-label={`Supprimer la tâche ${task.title}`} onClick={() => onDelete(task.id)}>
         <span aria-hidden="true">🗑️</span>
       </Button>
-      <p className="col-start-2 text-sm text-muted">{describeTask(task)}</p>
+      <p className="col-start-2 text-sm text-muted">{describeTask(task, today)}</p>
     </article>
   );
 }

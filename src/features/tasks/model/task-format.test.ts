@@ -16,7 +16,14 @@ describe('formatage des tâches', () => {
   });
 
   it('describeTask donne la priorité, puis l’échéance si elle existe', () => {
-    expect(describeTask(base)).toBe('Priorité : haute');
-    expect(describeTask({ ...base, dueDate: '2026-10-02' })).toBe('Priorité : haute · Échéance : 2 octobre 2026');
+    expect(describeTask(base, '2026-09-29')).toBe('Priorité : haute');
+    expect(describeTask({ ...base, dueDate: '2026-10-02' }, '2026-09-29')).toBe('Priorité : haute · Échéance : 2 octobre 2026');
+  });
+
+  it('describeTask signale une échéance dépassée, sauf si la tâche est terminée', () => {
+    const late = { ...base, dueDate: '2026-09-28' };
+    expect(describeTask(late, '2026-09-29')).toBe('Priorité : haute · Échéance : 28 septembre 2026 (en retard)');
+    expect(describeTask({ ...late, done: true }, '2026-09-29')).toBe('Priorité : haute · Échéance : 28 septembre 2026');
+    expect(describeTask({ ...base, dueDate: '2026-09-29' }, '2026-09-29')).not.toContain('en retard');
   });
 });

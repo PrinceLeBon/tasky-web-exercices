@@ -14,11 +14,12 @@ export function formatCounter(remaining: number): string {
   return `${remaining} tâches restantes`;
 }
 
-/** La ligne d'informations sous le titre d'une tâche. */
-export function describeTask(task: Task): string {
+/** La ligne d'informations sous le titre d'une tâche. `today` : le jour local, « AAAA-MM-JJ ». */
+export function describeTask(task: Task, today: string): string {
   const parts = [`Priorité : ${PRIORITY_LABELS[task.priority].toLowerCase()}`];
   if (task.dueDate) {
-    parts.push(`Échéance : ${formatDueDate(task.dueDate)}`);
+    const isLate = !task.done && task.dueDate < today;
+    parts.push(`Échéance : ${formatDueDate(task.dueDate)}${isLate ? ' (en retard)' : ''}`);
   }
   return parts.join(' · ');
 }
